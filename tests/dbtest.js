@@ -5,4 +5,4 @@ builddb(function(err) {
   else {
     console.log("Success");
   }
-})
+});

@@ -31,18 +31,23 @@ function makeModel() {
     // Generate a list of functions to call
     for (var i = 0; i < numProperties; i++) {
       var property = properties[i];
+      console.log("Making fcn for " + property);
 
       // Add a new function that fetches from redis and calls callback
-      fcnList[fcnList.length] = function(callback) {
-        client.lindex("limitedreddit:" + property + "s", index, function(err, reply) {
-          if (err) {
-            callback(err);
-          } else {
-            init[property] = reply;
-            callback();
-          }
-        });
-      }
+      fcnList[fcnList.length] = (function(property, index) {
+        return function(callback) {
+          client.lindex("limitedreddit:" + property + "s", index, function(err, reply) {
+            console.log("Asking for key: " + "limitedreddit:" + property + "s at index " + index);
+            console.log("Got reply: " + reply + " for property " + property);
+            if (err) {
+              callback(err);
+            } else {
+              init[property] = reply;
+              callback();
+            }
+          });
+        }
+      }(property, i));
     }
 
     async.parallel(fcnList, function(err, results) {

@@ -1,6 +1,6 @@
 Limited Reddit
 ==============
-A weekend hack.
+A Saturday afternoon hack.
 
 Tired of going on Reddit at 10:00 AM in the morning and leaving
 at 2:00AM the next morning? Wish you had the productivity of a person

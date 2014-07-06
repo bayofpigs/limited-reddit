@@ -6,16 +6,19 @@ body {
   width: 500px;
   margin: 0 auto;
   text-align: center;
+  font-family: 'Lora', serif;
 }
 
 .headingText {
   color: orange;
   padding-bottom: 0px;
   margin-bottom: 0px;
+  /*font-family: 'Lora', serif; */
 }
 
 .headingSubtext {
   color: blue;
   padding-top: 0px;
   margin-top: 0px;
+  /*font-family: 'Lora', serif;*/
 }
