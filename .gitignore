@@ -41,3 +41,6 @@ Session.vim
 
 ### Workspace ###
 exper/*
+
+### Bower modules ###
+public/bower_components/*

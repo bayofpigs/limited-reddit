@@ -1,1 +1,0 @@
-require("input2.js",function(){});var b=2,c="5";
