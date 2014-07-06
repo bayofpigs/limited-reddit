@@ -1,0 +1,21 @@
+body {
+  font-family: 'Lora', serif;
+}
+
+#heading {
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.headingText {
+  color: orange;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.headingSubtext {
+  color: blue;
+  padding-top: 0px;
+  margin-top: 0px;
+}

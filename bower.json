@@ -1,0 +1,22 @@
+{
+  "name": "limited-reddit",
+  "version": "0.1",
+  "description": "Limit reddit consumption",
+  "authors": [
+    "Mike Zhang"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "require": "*"
+  }
+}
