@@ -33,9 +33,11 @@ router.get('/data', function(req, res) {
 
           var fcnList = [];
           for (var i = 0; i < length; i++) {
-            fcnList[fcnList.length] = function(callback) {
-              link.initFromRedis(i, callback);
-            }
+            fcnList[fcnList.length] = (function(i) {
+              return function(callback) {
+                link.initFromRedis(i, callback);
+              };
+            }(i));
           }
 
           async.parallel(fcnList, function(err, objects) {
@@ -43,7 +45,7 @@ router.get('/data', function(req, res) {
               res.send(JSON.stringify({"Error": "Error while fetching: " + err}))
             } else {
               obj.links = objects;
-              res.send(JSON.stringify(obj));
+              res.send(JSON.stringify(obj), null, 3);
             }
           });
         });

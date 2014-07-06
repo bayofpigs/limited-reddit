@@ -47,7 +47,7 @@ function makeModel() {
             }
           });
         }
-      }(property, i));
+      }(property, index));
     }
 
     async.parallel(fcnList, function(err, results) {
