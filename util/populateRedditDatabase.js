@@ -34,7 +34,7 @@ var fetchRedditData = function(callback) {
     if (!written) {
       console.log(written);
 
-      if (fetching || fetchingVar) {
+      if (fetchingVar) {
         // If the data is currently being fetched, wait for completion
         waitClient = redis.createClient();
         waitClient.subscribe("completed");
