@@ -17,7 +17,6 @@
   ],
   "dependencies": {
     "bootstrap": "~3.2.0",
-    "require": "*",
     "angular": "~1.2.19"
   }
 }

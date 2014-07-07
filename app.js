@@ -25,6 +25,7 @@ app.use(function(req, res, next) {
 // Development error handler prints stack trace 
 if (app.get('env') == 'development') {
   console.log("You are in mode development. Hoorah!");
+  app.locals.pretty = true;
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {

@@ -1,6 +1,10 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-wiredep");
   grunt.initConfig({
+    watch: {
+      files: ['src/*.js'],
+      tasks: ['uglify']
+    },
     wiredep: {
       target: {
         src: [
@@ -14,8 +18,13 @@ module.exports = function(grunt) {
     },
     uglify: {
       dist: {
+        options: {
+          mangle: {
+            except: ['src/app.js']
+          }
+        },
         files: {
-          'public/javascript/outputtest.js': ['src/input1.js', 'src/input2.js', 'src/input3.js']
+          'public/javascript/app.js': ['src/app.js']
         }
       }
     }, 
@@ -28,8 +37,9 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-wiredep');
   grunt.loadNpmTasks('grunt-nodemon');
 
-  grunt.registerTask('default', ['jshint', 'wiredep', 'uglify', 'nodemon']);
+  grunt.registerTask('default', ['watch', 'jshint', 'wiredep', 'uglify', 'nodemon']);
 }

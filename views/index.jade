@@ -1,1 +1,23 @@
 extends layout
+
+block pagecss
+  link(rel="stylesheet" href="/stylesheets/index.css")
+
+block content
+  div(ng-app="LimitedReddit")
+    <h2>Today's links:</h2>
+    div(ng-controller="ContentController as content")
+      #loader(ng-show="content.loading")
+        p Loading content...
+        img(src="/images/ajax-loader.gif")
+      div(class="list-group-item entry" ng-repeat="link in content.links")
+        img.thumbnail(ng-src="{{link.thumbnail}}" ng-show="content.thumbnailAvailable(link.thumbnail)")
+        h3
+          a(href="{{link.url}}") {{link.title}}
+
+
+
+
+
+block pagejs
+  script(src="/javascript/app.js")

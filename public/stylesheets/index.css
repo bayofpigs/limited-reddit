@@ -1,0 +1,14 @@
+#loader {
+  width: 200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.thumbnail {
+  float: left;
+}
+
+.entry {
+  padding: 10px 0px;
+  margin: 10px 0px;
+}

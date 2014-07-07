@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title lim red
+    title Reddit Limiter
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(href='http://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css')
 
@@ -13,15 +13,14 @@ html
   body
     #heading
       h1.headingText Limited Reddit
-      h2.headingSubtext Limit your reddit consumption
+      h2.headingSubtext Beat your Reddit addiction
 
-    block content
-
+    .container
+      block content
 
     // bower:js
     script(src='/bower_components/jquery/dist/jquery.js')
     script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
-    script(src='/bower_components/require/build/require.min.js')
     script(src='/bower_components/angular/angular.js')
     // endbower
 
