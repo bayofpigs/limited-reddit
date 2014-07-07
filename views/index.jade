@@ -11,11 +11,21 @@ block content
         p Loading content...
         img(src="/images/ajax-loader.gif")
       div(class="list-group-item entry" ng-repeat="link in content.links")
-        img.thumbnail(ng-src="{{link.thumbnail}}" ng-show="content.thumbnailAvailable(link.thumbnail)")
-        h3
-          a(href="{{link.url}}") {{link.title}}
-
-
+        .image
+          img(ng-src="{{link.thumbnail}}" ng-show="content.thumbnailAvailable(link.thumbnail)")
+        div.description
+          h3
+            a(href="{{link.url}}") {{link.title}}
+          h4
+            span.nsfw(ng-show="link.over_18") nsfw
+            span.score {{link.ups}} points
+            span.score.pull-right From {{link.subreddit}}
+          h4 Posted by {{link.author}}
+          div.selftext(ng-show="link.selftext")
+            h4(ng-show="link.selftext") More information:
+            p {{content.htmlDecode(link.selftext)}}
+          p 
+            a(href="http://www.reddit.com/r/{{link.subreddit}}/comments/{{link.id}}") Comments
 
 
 

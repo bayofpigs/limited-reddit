@@ -20,6 +20,7 @@ function makeModel() {
 
   LinkObject.initFromRedis = function(index, done) {
     if (!client.get("limitedreddit:datawritten") === "true") {
+      // Not fit for development
       done(new Error("Redis not ready"));
     }
     init = {};
@@ -31,14 +32,14 @@ function makeModel() {
     // Generate a list of functions to call
     for (var i = 0; i < numProperties; i++) {
       var property = properties[i];
-      console.log("Making fcn for " + property);
+      //console.log("Making fcn for " + property);
 
       // Add a new function that fetches from redis and calls callback
       fcnList[fcnList.length] = (function(property, index) {
         return function(callback) {
           client.lindex("limitedreddit:" + property + "s", index, function(err, reply) {
-            console.log("Asking for key: " + "limitedreddit:" + property + "s at index " + index);
-            console.log("Got reply: " + reply + " for property " + property);
+            //console.log("Asking for key: " + "limitedreddit:" + property + "s at index " + index);
+            //console.log("Got reply: " + reply + " for property " + property);
             if (err) {
               callback(err);
             } else {

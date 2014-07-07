@@ -3,13 +3,17 @@ var redis = require('redis');
 var link = require('../models/link');
 var async = require('async');
 
+// Variable to check if fetching
+var fetchingVar = false;
+
 // Helper function
 var setExpiration = function() {
-  // One day
-  client.expire("limitedreddit:datawritten", 900);
+  // two hours
+  var expirationTime = 7200
+  client.expire("limitedreddit:datawritten", expirationTime);
   for (var i = 0; i < link.numProperties; i++) {
     var property = link.properties[i];
-    client.expire("limitedreddit:" + property + "s", 900);
+    client.expire("limitedreddit:" + property + "s", expirationTime);
   }
 };
 
@@ -26,34 +30,51 @@ var fetchRedditData = function(callback) {
   var curTime = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
   console.log("Fetching new data at " + curTime);
   // Don't try to fetch if already fetching
-  client.get("limitedreddit:fetching", function(err, fetching) {
-    if (fetching) {
-      callback(new Error("Cannot fetch while still fetching"));
-    } else {
-      // Set the fetching indicator - preventing future setting
-      client.set("limitedreddit:fetching", "true", redis.print)
-      request("http://api.reddit.com/top?limit=" + limit, function(error, response, body) {
-        if (error) callback(error);;
-        if (!error && response.statusCode == 200) {
-          var object = JSON.parse(body);
-          var links = object.data.children;
+  client.get("limitedreddit:datawritten", function(err, written) {
+    if (!written) {
+      console.log(written);
 
-          var fcnList = [];
-          for (var i = 0; i < links.length; i++) {
-            var dataObject = links[i].data;
-            link.writeToRedis(dataObject);
+      if (fetching || fetchingVar) {
+        // If the data is currently being fetched, wait for completion
+        waitClient = redis.createClient();
+        waitClient.subscribe("completed");
+        waitClient.on("message", function (channel, message) {
+          if (message === "success") {
+            callback(null);
+          } else {
+            callback(message);
           }
+        });
+      } else {
+        fetchingVar = true;
+        request("http://api.reddit.com/hot?limit=" + limit, function(error, response, body) {
+          if (error) {
+            client.publish("completed", error);
+            callback(error);
+          } else if (!error && response.statusCode == 200) {
+            var object = JSON.parse(body);
+            var links = object.data.children;
 
-          // Unset the fetching indicator
-          client.del("limitedreddit:fetching");
-          client.set("limitedreddit:datawritten", "true");
-          setExpiration();
+            for (var i = 0; i < links.length; i++) {
+              var dataObject = links[i].data;
+              link.writeToRedis(dataObject);
+            }
 
-          callback(null);
-        }
-      });
+            // Unset the fetching indicator
+            client.del("limitedreddit:fetching");
+            client.set("limitedreddit:datawritten", "true");
+            setExpiration();
+
+            client.publish("completed", "success");
+
+            callback(null);
+          }
+        });
+      }
+    } else {
+      callback(null);
     }
-  })
+  });
 };
 
 module.exports = fetchRedditData;

@@ -3,7 +3,7 @@ body {
 }
 
 #heading {
-  width: 500px;
+  width: 700;
   margin: 0 auto;
   text-align: center;
   font-family: 'Lora', serif;
@@ -21,4 +21,10 @@ body {
   padding-top: 0px;
   margin-top: 0px;
   /*font-family: 'Lora', serif;*/
+}
+
+#footer {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  text-align: center;
 }

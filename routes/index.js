@@ -14,9 +14,18 @@ var initDB = function(written, callback) {
   }
 }
 
+var getMessage = function() {
+  var messages = ["Become a Master Programmer", "Go outside", "Make new friends", "Improve your social skills",
+                  "Start a Startup", "Read a book", "Master your math skills", "Get that perfect body you've always wanted",
+                  "Volunteer", "Write a blog"];
+  var messageLen = messages.length;
+
+  return messages[Math.floor(Math.random() * messageLen)]
+}
+
 /* Get home page */
 router.get('/', function(req, res) {
-  res.render('index');
+  res.render('index', {message: getMessage()});
 });
 
 router.get('/data', function(req, res) {

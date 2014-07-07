@@ -1,9 +1,13 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-wiredep");
   grunt.initConfig({
-    watch: {
-      files: ['src/*.js'],
-      tasks: ['uglify']
+    concurrent: {
+      target: {
+        tasks: ['nodemon', 'watch'],
+        options: {
+          logConcurrentOutput: true
+        }
+      }
     },
     wiredep: {
       target: {
@@ -32,6 +36,10 @@ module.exports = function(grunt) {
       dev: {
         script: 'app.js'
       }
+    },
+    watch: {
+      files: ['src/*.js', 'public/bower_components/**'],
+      tasks: ['uglify', 'wiredep']
     }
   });
 
@@ -40,6 +48,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-wiredep');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-concurrent');
 
-  grunt.registerTask('default', ['watch', 'jshint', 'wiredep', 'uglify', 'nodemon']);
+  grunt.registerTask('default', [ 'jshint', 'wiredep', 'uglify', 'concurrent:target']);
 }

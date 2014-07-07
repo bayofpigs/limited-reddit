@@ -4,11 +4,29 @@
   text-align: center;
 }
 
-.thumbnail {
+.image {
   float: left;
+  margin-right: 20px;
+  height: 150px;
+  display:block;
+}
+
+.description {
+  margin-left: 50px;
+  display: block;
 }
 
 .entry {
-  padding: 10px 0px;
-  margin: 10px 0px;
+  overflow: auto;
+}
+
+.nsfw {
+  color: red;
+  border-style: solid;
+  border-color: red;
+  margin-right: 10px;
+}
+
+a:visited {
+  color: #4b2f89;
 }
