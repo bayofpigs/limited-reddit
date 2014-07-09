@@ -61,7 +61,7 @@ var fetchRedditData = function(callback) {
             }
 
             // Unset the fetching indicator
-            client.del("limitedreddit:fetching");
+            fetchingVar = false;
             client.set("limitedreddit:datawritten", "true");
             setExpiration();
 

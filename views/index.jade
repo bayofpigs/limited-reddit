@@ -15,7 +15,7 @@ block content
           img(ng-src="{{link.thumbnail}}" ng-show="content.thumbnailAvailable(link.thumbnail)")
         div.description
           h3
-            a(href="{{link.url}}") {{link.title}}
+            a(href="{{link.url}}") {{content.htmlDecode(link.title)}}
           h4
             span.nsfw(ng-show="link.over_18") nsfw
             span.score {{link.ups}} points
