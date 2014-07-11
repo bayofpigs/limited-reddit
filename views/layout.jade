@@ -9,6 +9,13 @@ html
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
     // endbower
 
+    // bower:js
+    script(src='/bower_components/modernizr/modernizr.js')
+    script(src='/bower_components/jquery/dist/jquery.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+    script(src='/bower_components/angular/angular.js')
+    // endbower
+
     block pagecss
   body
     #heading
@@ -18,12 +25,6 @@ html
     .container
       block content
 
-    // bower:js
-    script(src='/bower_components/modernizr/modernizr.js')
-    script(src='/bower_components/jquery/dist/jquery.js')
-    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
-    script(src='/bower_components/angular/angular.js')
-    // endbower
 
     block pagejs
 

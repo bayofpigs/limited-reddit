@@ -8,8 +8,8 @@ var fetchingVar = false;
 
 // Helper function
 var setExpiration = function() {
-  // two hours
-  var expirationTime = 7200
+  // twelve hours
+  var expirationTime = 43200;
   client.expire("limitedreddit:datawritten", expirationTime);
   for (var i = 0; i < link.numProperties; i++) {
     var property = link.properties[i];
@@ -24,7 +24,7 @@ client.on('error', function(err) {
   console.log("Redis Error: " + err);
 });
 
-var limit = 100;
+var limit = 50;
 var fetchRedditData = function(callback) {
   var now = new Date();
   var curTime = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
