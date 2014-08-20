@@ -31,6 +31,7 @@ router.get('/', function(req, res) {
 router.get('/data', function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   client.get("limitedreddit:datawritten", function(err, written) {
+    console.log("Written: " +  written);
     if (err) res.send(JSON.stringify({"Error": "Database issues " + err}));
     else {
       // check if the db is written. If it is, just call the function. If not,

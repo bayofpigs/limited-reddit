@@ -8,6 +8,7 @@ var fetchingVar = false;
 
 // Helper function
 var setExpiration = function() {
+  console.log("Setting expiration");
   // twelve hours
   var expirationTime = 43200;
   client.expire("limitedreddit:datawritten", expirationTime);
@@ -32,10 +33,10 @@ var fetchRedditData = function(callback) {
   // Don't try to fetch if already fetching
   client.get("limitedreddit:datawritten", function(err, written) {
     if (!written) {
-      console.log(written);
-
+      console.log("Written2: " + written);
       if (fetchingVar) {
         // If the data is currently being fetched, wait for completion
+        console.log("Now fetching");
         waitClient = redis.createClient();
         waitClient.subscribe("completed");
         waitClient.on("message", function (channel, message) {
@@ -47,11 +48,19 @@ var fetchRedditData = function(callback) {
         });
       } else {
         fetchingVar = true;
-        request("http://api.reddit.com/hot?limit=" + limit, function(error, response, body) {
+        request({
+          url: "http://api.reddit.com/top?limit=" + limit,
+          headers: {
+            "User-Agent": "Reddit Limiter Application"
+          }
+        }, function(error, response, body) {
           if (error) {
+            console.log("Client completed, but with error:");
+            console.log(error);
             client.publish("completed", error);
             callback(error);
           } else if (!error && response.statusCode == 200) {
+            console.log("No error, response status code good");
             var object = JSON.parse(body);
             var links = object.data.children;
 
@@ -66,8 +75,15 @@ var fetchRedditData = function(callback) {
             setExpiration();
 
             client.publish("completed", "success");
+            console.log("Fetch Completed");
 
             callback(null);
+          } else {
+            console.log("No error, but response status code is not good");
+            console.log("Status code: " + response.statusCode);
+            console.log("Response body: ");
+            console.log(body);
+            callback(new Error("Bad status code"));
           }
         });
       }
